@@ -2,26 +2,18 @@ import pandas as pd
 import random
 from datetime import date
 
-today = date.today()
-print("Today's date:", today)
-
-
-dfb = pd.read_csv(r'../101-AI-Prevision-Qatar-2022/data/raw/fifa_ranking-2022-10-06.csv')
+rawdata = r'../101-AI-Prevision-Qatar-2022/data/raw/fifa_ranking-2022-10-06.csv'
+dfb = pd.read_csv(rawdata)
 dfb = dfb[['country_abrv','total_points', 'rank_date']]
-print(dfb.info())
 dfb['rank_date'] = pd.to_datetime(dfb['rank_date'])
+cortarawdata = pd.to_datetime(rawdata[53:63])
+selecao = (dfb['rank_date'] == cortarawdata)
+dfb = dfb[selecao].sort_values(by=['total_points'], ascending=False, ignore_index=True)
 
-selecao = (dfb['rank_date'] >= '2018-01-01') & (dfb['rank_date'] <= '2019-02-10')
-df_filtrado = dfb[selecao]
 
-print(df_filtrado)
+
 print(dfb.info())
 print(dfb.head())
-
-
-
-#country_abrv
-#total_points
 
 df = pd.read_csv('https://raw.githubusercontent.com/digitalinnovationone/live-coding-evitando-o-7x1-com-python-e-sql/main/data.csv')
 print(df.head())
